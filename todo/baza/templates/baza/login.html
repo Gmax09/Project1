@@ -1,0 +1,16 @@
+<h1>Logowanie</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="fieldWrapper">
+        
+        <label for="{{ form.username.id_for_label }}">Login:</label>
+        {{ form.username }}
+    </div>
+    <div class="fieldWrapper">
+        
+        <label for="{{ form.password.id_for_label }}">Hasło:</label>
+        {{ form.password }}
+    </div>
+    <input type="submit" value="Zaloguj" >
+</form>

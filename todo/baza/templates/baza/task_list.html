@@ -1,0 +1,30 @@
+
+{% if request.user.is_authenticated %}
+<p>{{request.user}}</p>
+<a href="{% url 'logout' %}">Wyloguj</a>
+{% else%}
+<a href="{% url 'login' %}">Zaloguj</a>
+{% endif %}
+
+<hr>
+<h1>Lista rzeczy do zrobienia</h1>
+<a href="{% url 'task-create' %}">Dodaj Zadanie</a>
+
+<table>
+    <tr>
+        <th>Czynności</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {%for task in object_list%}
+    <tr>
+        <td>{{task.title}}</td>
+        <td><a href="{% url 'task' task.id %}">Podgląd</a></td>
+        <td><a href="{% url 'task-update' task.id %}">Edytuj</a></td>
+        <td><a href="{% url 'task-delete' task.id %}">Usuń</a></td>
+    </tr>
+    {% empty %}
+        <h3>Brak dodatkowych zadan</h3>
+    {% endfor %}
+
+</table>
