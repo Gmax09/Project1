@@ -1,30 +1,63 @@
+{% extends 'baza/main.html' %}
+{% block content %}
 
-{% if request.user.is_authenticated %}
-<p>{{request.user}}</p>
+
+<div class="header-bar">
+    <div>
+        <h1>Witaj {{request.user|title}}</h1>
+        <h3 style="margin:0">Liczba zadań do wykonania: <i>{{count}}</i> </h3>
+
+    </div>
+    {% if request.user.is_authenticated %}
+
 <a href="{% url 'logout' %}">Wyloguj</a>
 {% else%}
 <a href="{% url 'login' %}">Zaloguj</a>
 {% endif %}
+</div>
 
-<hr>
-<h1>Lista rzeczy do zrobienia</h1>
-<a href="{% url 'task-create' %}">Dodaj Zadanie</a>
 
-<table>
-    <tr>
-        <th>Czynności</th>
-        <th></th>
-        <th></th>
-    </tr>
-    {%for task in object_list%}
-    <tr>
-        <td>{{task.title}}</td>
-        <td><a href="{% url 'task' task.id %}">Podgląd</a></td>
-        <td><a href="{% url 'task-update' task.id %}">Edytuj</a></td>
-        <td><a href="{% url 'task-delete' task.id %}">Usuń</a></td>
-    </tr>
+
+<div class="search-add">
+
+    <form method='GET' style="margin-top: 20px;display: flex;">
+        <input type="text" name="search-area" value="{{search_input}}">
+        <input type="submit" value="Szukaj">
+    
+    </form>
+    <a id="add-link" href="{% url 'task-create' %}">Dodaj Zadanie</a>
+</div>
+
+
+
+ 
+
+<div class="task-item-wrapper">
+    {%for task in tasks%}
+        <div class="task-wrapper">
+            {% if task.complete %}
+                <div class="task-title">
+                    <div class="task-complete"></div>
+                        <i><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i>
+                    
+                </div>
+
+                {% else %}
+                <div class="task-title">
+                    <div class="task-incomplete"></div>
+                        <a href="{% url 'task-update' task.id %}">{{task}}</a>
+                </div>
+                <a class="delete-link" href="{% url 'task-delete' task.id %}">&#215;</a>
+            {% endif%}
+            
+        </div>
+
     {% empty %}
         <h3>Brak dodatkowych zadan</h3>
     {% endfor %}
 
-</table>
+</div>
+
+
+{% endblock content %}
+

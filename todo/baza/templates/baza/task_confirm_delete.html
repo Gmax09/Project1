@@ -1,6 +1,10 @@
+{% extends 'baza/main.html' %}
+{% block content %}
 <a href="{% url 'tasks' %}">Powrót</a>
 <form method="post">
     {% csrf_token %}
-    <p>Czy na pewno chcesz usunąć to zadanie? "{{zadanie}}"</p>
+    <p>Czy na pewno chcesz usunąć to zadanie? "{{tasks}}"</p>
     <input type="submit" value="Usuń"/>
 </form>
+
+{% endblock content %}
